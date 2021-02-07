@@ -1,1 +1,1 @@
-##Currency Converter Android App
+# Currency Converter Android App by Prabhat Pandey #
