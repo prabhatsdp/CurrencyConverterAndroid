@@ -1,5 +1,6 @@
 package `in`.crazybytes.currencyconverter.ui
 
+import `in`.crazybytes.currencyconverter.data.models.Currency
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,11 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.databinding.FragmentConverterBinding
 import `in`.crazybytes.currencyconverter.main.MainViewModel
+import `in`.crazybytes.currencyconverter.other.Helper
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ConverterFragment : Fragment() {
 
     private var _binding: FragmentConverterBinding? = null
@@ -50,13 +57,76 @@ class ConverterFragment : Fragment() {
             )
         }
 
+        viewModel.fromCurrency.observe(viewLifecycleOwner) { currency ->
 
+            binding.fromCurrencySymbolTv.text = currency.symbol
+            binding.fromCurrencyTitleTv.text = currency.title
+            binding.fromCurrencyCodeTv.text = currency.code
 
+        }
+
+        viewModel.toCurrency.observe(viewLifecycleOwner) { currency ->
+
+            binding.toCurrencySymbolTv.text = currency.symbol
+            binding.toCurrencyTitleTv.text = currency.title
+            binding.toCurrencyCodeTv.text = currency.code
+
+        }
+
+        viewModel.amount.observe(viewLifecycleOwner) {
+            binding.fromCurrencyAmountTv.text = it
+        }
+
+        viewModel.conversion.observe(viewLifecycleOwner) { currencyRateEvent ->
+            when(currencyRateEvent) {
+                is MainViewModel.CurrencyRateEvent.Success -> {
+                    binding.toCurrencyAmountTv.text = String.format("%.2f", currencyRateEvent.result.rate)
+                    binding.toCurrencyTitleTv.text = currencyRateEvent.result.currency.title
+                    binding.toCurrencyCodeTv.text = currencyRateEvent.result.currency.code
+                    binding.toCurrencySymbolTv.text = currencyRateEvent.result.currency.symbol
+                    binding.progressBar.isVisible = false
+                }
+
+                is MainViewModel.CurrencyRateEvent.Failure -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(context, currencyRateEvent.errorText, Toast.LENGTH_SHORT).show()
+                }
+                is MainViewModel.CurrencyRateEvent.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                else -> {}
+            }
+        }
+
+        convert("01", "USD", "INR")
+        viewModel.setSelectedFromCurrency(
+            Currency(
+                "USD",
+                "United States Dollar",
+                "$"
+            )
+        )
+        viewModel.setSelectedToCurrency(
+            Currency(
+                "INR",
+                "Indian Rupee",
+                "₹"
+            )
+        )
+
+        viewModel.setAmount("01")
+    }
+
+    private fun convert(amountStr: String, fromCur: String, toStr: String) {
+        viewModel.convert(
+            "01",
+            "USD",
+            "INR"
+        )
     }
 
     companion object {
 
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance() =
             ConverterFragment().apply {

@@ -2,16 +2,16 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="200dp"
     android:height="200dp"
-    android:viewportWidth="200"
-    android:viewportHeight="200">
+    android:viewportWidth="408"
+    android:viewportHeight="408">
     <path
         android:fillColor="#FFF"
-        android:pathData="M200 100c0 55.23-44.77 100-100 100S0 155.23 0 100S44.77 0 100 0s100 44.77 100 100z"/>
+        android:pathData="M204 34a170 170 0 1 0 0 340a170 170 0 1 0 0-340z"/>
     <path
         android:fillColor="#623CEA"
-        android:pathData="M124.78 113.25L106 132.03V50.98H94.24v81.64l-19.37-19.37l-8.32 8.32l33.27 33.27l33.28-33.27l-8.32-8.32z"/>
+        android:pathData="M0 204c0 112.67 91.33 204 204 204s204-91.33 204-204h-34.01l0.01 2c0 93.89-76.11 170-170 170S34 299.89 34 206l0.01-2H0z"/>
     <path
         android:fillColor="#623CEA"
         android:fillType="evenOdd"
-        android:pathData="M200 100c0 55.23-44.77 100-100 100S0 155.23 0 100S44.77 0 100 0s100 44.77 100 100zm-16.67 0.98c0 46.02-37.3 83.33-83.33 83.33c-46.02 0-83.33-37.3-83.33-83.33c0-46.02 37.3-83.33 83.33-83.33c46.02 0 83.33 37.3 83.33 83.33z"/>
+        android:pathData="M216.24 269.34l38.31-38.31L271.52 248l-50.91 50.91l-16.97 16.97l-16.97-16.97L135.76 248l16.97-16.97l39.51 39.51V104h24v165.34z"/>
 </vector>

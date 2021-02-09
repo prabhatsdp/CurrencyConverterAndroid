@@ -8,23 +8,27 @@
     <fragment
         android:id="@+id/converterFragment"
         android:name="in.crazybytes.currencyconverter.ui.ConverterFragment"
-        android:label="fragment_converter"
-        tools:layout="@layout/fragment_converter" >
+        android:label="@string/convert"
+        tools:layout="@layout/fragment_converter">
         <action
             android:id="@+id/action_converterFragment_to_selectCurrencyFragment"
             app:destination="@id/selectCurrencyFragment" />
         <action
             android:id="@+id/action_converterFragment_to_amountFragment"
-            app:destination="@id/amountFragment" />
+            app:destination="@id/amountFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_bottom" />
     </fragment>
     <fragment
         android:id="@+id/amountFragment"
         android:name="in.crazybytes.currencyconverter.ui.AmountFragment"
-        android:label="fragment_amount"
+        android:label="Enter Amount"
         tools:layout="@layout/fragment_amount" />
     <fragment
         android:id="@+id/selectCurrencyFragment"
         android:name="in.crazybytes.currencyconverter.ui.SelectCurrencyFragment"
-        android:label="fragment_select_currency"
+        android:label="Select Currency"
         tools:layout="@layout/fragment_select_currency" />
 </navigation>

@@ -1,6 +1,8 @@
-package `in`.crazybytes.currencyconverter
+package `in`.crazybytes.currencyconverter.ui
 
+import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.databinding.ActivityMainBinding
+
 import `in`.crazybytes.currencyconverter.main.MainViewModel
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -22,6 +26,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//
+//        setSupportActionBar(binding.toolbar)
+//        val navController = findNavController(R.id.navHostFragment)
+//        setupActionBarWithNavController(navController)
+
+
 //
 //        binding.btnConvert.setOnClickListener {
 //            viewModel.convert(
