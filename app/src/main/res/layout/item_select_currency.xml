@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="32dp"
+    android:paddingHorizontal="24dp"
     android:paddingVertical="16dp"
     android:clickable="true"
     android:focusable="true"
@@ -18,10 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="$"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textColor="@color/purple_500"
         android:id="@+id/currencySymbolTv"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +31,7 @@
         app:layout_constraintStart_toEndOf="@id/currencySymbolTv"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="US Dollar"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textColor="@color/purple_500"
         android:layout_marginStart="16dp"
         android:id="@+id/currencyTitleTv"/>
@@ -41,7 +42,8 @@
         app:layout_constraintBaseline_toBaselineOf="@id/currencyTitleTv"
         app:layout_constraintStart_toEndOf="@id/currencyTitleTv"
         tools:text="USD"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:textColor="@color/transparentPurple"
         android:layout_marginStart="8dp"
         android:id="@+id/currencyCodeTv"/>

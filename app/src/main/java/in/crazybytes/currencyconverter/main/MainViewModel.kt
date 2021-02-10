@@ -5,12 +5,14 @@ import `in`.crazybytes.currencyconverter.data.models.CurrencyRate
 import `in`.crazybytes.currencyconverter.other.Helper
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import `in`.crazybytes.currencyconverter.utils.Resource
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 import kotlin.math.round
 
@@ -32,13 +34,25 @@ class MainViewModel @Inject constructor(
         object Empty : CurrencyRateEvent()
     }
 
-    private val _fromCurrency = MutableLiveData<Currency>()
+    private val _fromCurrency = MutableLiveData<Currency>(
+        Currency(
+            "USD",
+            "United States Dollar",
+        "$"
+        )
+    )
     val fromCurrency: LiveData<Currency> = _fromCurrency
 
-    private val _toCurrency = MutableLiveData<Currency>()
+    private val _toCurrency = MutableLiveData<Currency>(
+        Currency(
+            "INR",
+             "Indian Rupees",
+            "₹"
+        )
+    )
     val toCurrency: LiveData<Currency> = _toCurrency
 
-    private val _amount = MutableLiveData<String>()
+    private val _amount = MutableLiveData<String>("01")
     val amount: LiveData<String> = _amount
 
     private val _conversion = MutableLiveData<CurrencyRateEvent>(CurrencyRateEvent.Empty)
@@ -48,65 +62,81 @@ class MainViewModel @Inject constructor(
      * converts [amountStr] from [fromCurrency] to [toCurrency] and
      * saves the result in the live data.
      */
-    fun convert(
-        amountStr: String,
-        fromCurrency: String,
-        toCurrency: String
-    ) {
-        val fromAmount = amountStr.toFloatOrNull()
+    fun convert() {
 
-        if (fromAmount == null) {
-            _conversion.value = CurrencyRateEvent.Failure("Not a valid amount.")
-        }
+        try {
 
-        viewModelScope.launch(dispatchers.io) {
-            _conversion.postValue(CurrencyRateEvent.Loading)
+            val fromAmount = amount.value!!.toFloatOrNull()
 
-            when (val ratesResponse = repository.getRates(fromCurrency)) {
-                is Resource.Error -> {
-                    _conversion.postValue(CurrencyRateEvent.Failure(ratesResponse.message!!))
-                }
-                is Resource.Success -> {
-                    val rates = ratesResponse.data!!.rates
-                    val rate = Helper.getRateForCurrency(toCurrency, rates)
+            if (fromAmount == null) {
+                _conversion.value = CurrencyRateEvent.Failure("Not a valid amount.")
+            }
 
-                    if (rate == null) {
-                        _conversion.postValue(CurrencyRateEvent.Failure("Unexpected Error"))
-                    } else {
-//                        val convertedCurrency = round(fromAmount!! * rate.rate * 100) / 100
-                        _conversion.postValue(
-                            CurrencyRateEvent.Success(
-                                rate
-                            )
-                        )
+            viewModelScope.launch(dispatchers.io) {
+                _conversion.postValue(CurrencyRateEvent.Loading)
+
+                when (val ratesResponse = repository.getRates(fromCurrency.value!!.code)) {
+                    is Resource.Error -> {
+                        _conversion.postValue(CurrencyRateEvent.Failure(ratesResponse.message!!))
                     }
+                    is Resource.Success -> {
+                        val rates = ratesResponse.data!!.rates
+                        val rate = Helper.getRateForCurrency(toCurrency.value!!.code, rates)
 
+                        if (rate == null) {
+                            _conversion.postValue(CurrencyRateEvent.Failure("Unexpected Error"))
+                        } else {
+//                        val convertedCurrency = round(fromAmount!! * rate.rate * 100) / 100
+                            _conversion.postValue(
+                                CurrencyRateEvent.Success(
+                                    rate
+                                )
+                            )
+                        }
+
+                    }
                 }
             }
+
+        } catch (e: Exception) {
+            _conversion.value = CurrencyRateEvent.Failure("Some Error Occurred.")
         }
+
     }
 
     /**
      * sets [currency] as selected from currency.
      */
     fun setSelectedFromCurrency(currency: Currency) {
-        _fromCurrency.postValue(currency)
+        Log.d(TAG, "setSelectedFromCurrency: Setting From Currency.")
+        _fromCurrency.value = currency
+
+        convert()
     }
 
     /**
      * sets [currency] as selected to currency.
      */
     fun setSelectedToCurrency(currency: Currency) {
-        _toCurrency.postValue(currency)
+        Log.d(TAG, "setSelectedToCurrency: Setting To Currency.")
+        _toCurrency.value = currency
+
+        convert()
     }
 
     fun setAmount(amountStr: String) {
         val amount = amountStr.toFloatOrNull()
         if(amount != null) {
-            _amount.postValue(String.format("%.2f", amount))
+            _amount.value = String.format("%.2f", amount)
         } else {
-            _amount.postValue(String.format("%.2f", 0))
+            _amount.value = String.format("%.2f", 0)
         }
+
+        convert()
+    }
+
+    companion object {
+        private const val TAG = "MainViewModel"
     }
 
 }

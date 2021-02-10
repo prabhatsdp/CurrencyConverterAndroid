@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -27,13 +28,14 @@ class ConverterFragment : Fragment() {
     private var _binding: FragmentConverterBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
 
         }
+        viewModel.convert()
     }
 
     override fun onCreateView(
@@ -42,6 +44,7 @@ class ConverterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentConverterBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -95,9 +98,9 @@ class ConverterFragment : Fragment() {
             when(currencyRateEvent) {
                 is MainViewModel.CurrencyRateEvent.Success -> {
                     binding.toCurrencyAmountTv.text = String.format("%.2f", currencyRateEvent.result.rate)
-                    binding.toCurrencyTitleTv.text = currencyRateEvent.result.currency.title
-                    binding.toCurrencyCodeTv.text = currencyRateEvent.result.currency.code
-                    binding.toCurrencySymbolTv.text = currencyRateEvent.result.currency.symbol
+//                    binding.toCurrencyTitleTv.text = currencyRateEvent.result.currency.title
+//                    binding.toCurrencyCodeTv.text = currencyRateEvent.result.currency.code
+//                    binding.toCurrencySymbolTv.text = currencyRateEvent.result.currency.symbol
                     binding.progressBar.isVisible = false
                 }
 
@@ -112,32 +115,8 @@ class ConverterFragment : Fragment() {
             }
         }
 
-        convert("01", "USD", "INR")
-        viewModel.setSelectedFromCurrency(
-            Currency(
-                "USD",
-                "United States Dollar",
-                "$"
-            )
-        )
-        viewModel.setSelectedToCurrency(
-            Currency(
-                "INR",
-                "Indian Rupee",
-                "₹"
-            )
-        )
-
-        viewModel.setAmount("01")
     }
 
-    private fun convert(amountStr: String, fromCur: String, toStr: String) {
-        viewModel.convert(
-            "01",
-            "USD",
-            "INR"
-        )
-    }
 
     companion object {
 

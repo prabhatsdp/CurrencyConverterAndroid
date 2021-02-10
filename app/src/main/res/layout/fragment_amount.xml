@@ -258,6 +258,7 @@
                 android:layout_height="wrap_content" />
 
             <ImageView
+                android:id="@+id/doneBtn"
                 android:layout_width="@dimen/numberButtonSize"
                 android:layout_height="@dimen/numberButtonSize"
                 android:background="@drawable/bg_done_btn_ripple"
@@ -266,7 +267,7 @@
                 android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
-                app:tint="@color/purple_500"
+                app:tint="@color/done_btn_color"
                 android:padding="16dp"/>
 
 

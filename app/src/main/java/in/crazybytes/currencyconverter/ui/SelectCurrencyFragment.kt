@@ -8,29 +8,38 @@ import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.databinding.FragmentSelectCurrencyBinding
+import `in`.crazybytes.currencyconverter.main.MainViewModel
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
 import `in`.crazybytes.currencyconverter.utils.CurrencySelectionListener
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.viewinterop.viewModel
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
  * Use the [SelectCurrencyFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+@AndroidEntryPoint
 class SelectCurrencyFragment : Fragment() {
 
     private val args: SelectCurrencyFragmentArgs by navArgs()
 
     private var _binding: FragmentSelectCurrencyBinding? = null
     private val binding get() = _binding!!
+
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +79,14 @@ class SelectCurrencyFragment : Fragment() {
                 Toast
                     .makeText(context, "${selectedCurrency.code} clicked", Toast.LENGTH_SHORT)
                     .show()
+
+                if(args.source == SOURCE_FROM) {
+                    mainViewModel.setSelectedFromCurrency(selectedCurrency)
+                }
+                if(args.source == SOURCE_TO) {
+                    mainViewModel.setSelectedToCurrency(selectedCurrency)
+                }
+                findNavController().navigateUp()
             }
 
         }
