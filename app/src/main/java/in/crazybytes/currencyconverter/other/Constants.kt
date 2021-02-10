@@ -7,5 +7,6 @@ package `in`.crazybytes.currencyconverter.other
 
 object Constants {
     const val BASE_URL = "https://api.exchangeratesapi.io"
-
-}
+    const val SOURCE_FROM = "from"
+    const val SOURCE_TO = "to"
+ }

@@ -8,9 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.databinding.FragmentConverterBinding
 import `in`.crazybytes.currencyconverter.main.MainViewModel
+import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
+import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
 import `in`.crazybytes.currencyconverter.other.Helper
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,18 +45,29 @@ class ConverterFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fromCurrencyTitleTv.setOnClickListener {
+
+
             findNavController().navigate(
-                ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment()
+                ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment(SOURCE_FROM)
+            )
+        }
+
+        binding.toCurrencyTitleTv.setOnClickListener {
+            findNavController().navigate(
+                ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment(SOURCE_TO)
             )
         }
 
         binding.fromCurrencyAmountTv.setOnClickListener {
             findNavController().navigate(
-                ConverterFragmentDirections.actionConverterFragmentToAmountFragment()
+                ConverterFragmentDirections.actionConverterFragmentToAmountFragment(
+                    binding.fromCurrencyAmountTv.text.toString()
+                )
             )
         }
 

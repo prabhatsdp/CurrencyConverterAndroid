@@ -12,23 +12,45 @@
         tools:layout="@layout/fragment_converter">
         <action
             android:id="@+id/action_converterFragment_to_selectCurrencyFragment"
-            app:destination="@id/selectCurrencyFragment" />
+            app:destination="@id/selectCurrencyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                app:argType="string"
+                android:name="source"/>
+        </action>
         <action
             android:id="@+id/action_converterFragment_to_amountFragment"
             app:destination="@id/amountFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_bottom" />
+            app:popExitAnim="@anim/slide_out_bottom">
+
+            <argument
+                app:argType="string"
+                android:name="amount"/>
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/amountFragment"
         android:name="in.crazybytes.currencyconverter.ui.AmountFragment"
         android:label="Enter Amount"
-        tools:layout="@layout/fragment_amount" />
+        tools:layout="@layout/fragment_amount" >
+        <argument
+            android:name="amount"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/selectCurrencyFragment"
         android:name="in.crazybytes.currencyconverter.ui.SelectCurrencyFragment"
         android:label="Select Currency"
-        tools:layout="@layout/fragment_select_currency" />
+        tools:layout="@layout/fragment_select_currency" >
+        <argument
+            android:name="source"
+            app:argType="string" />
+    </fragment>
 </navigation>
