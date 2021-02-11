@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.databinding.FragmentAmountBinding
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 
 /**
@@ -15,7 +16,9 @@ import androidx.navigation.fragment.findNavController
  * Use the [AmountFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AmountFragment : Fragment() {
+class AmountFragment : Fragment(), View.OnClickListener {
+
+    private val args: AmountFragmentArgs by navArgs()
 
     private var _binding: FragmentAmountBinding? = null
     val binding get() = _binding!!
@@ -30,7 +33,7 @@ class AmountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAmountBinding.inflate(layoutInflater, container, false)
 
         return binding.root
@@ -41,9 +44,17 @@ class AmountFragment : Fragment() {
 
         binding.doneBtn.isEnabled = false
 
-        binding.btnCloseIv.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        binding.numberOne.setOnClickListener(this)
+        binding.numberTwo.setOnClickListener(this)
+        binding.numberThree.setOnClickListener(this)
+        binding.numberFour.setOnClickListener(this)
+        binding.numberFive.setOnClickListener(this)
+        binding.numberSix.setOnClickListener(this)
+        binding.numberSeven.setOnClickListener(this)
+        binding.numberEight.setOnClickListener(this)
+        binding.numberZero.setOnClickListener(this)
+        binding.decimalPoint.setOnClickListener(this)
+        binding.doneBtn.setOnClickListener(this)
     }
 
     companion object {
@@ -55,5 +66,57 @@ class AmountFragment : Fragment() {
 
                 }
             }
+    }
+
+    override fun onClick(v: View?) {
+        v?.let {
+            when(v.id) {
+                R.id.numberOne -> {
+
+                }
+                R.id.numberTwo -> {
+
+                }
+                R.id.numberThree -> {
+
+                }
+                R.id.numberFour -> {
+
+                }
+                R.id.numberFive -> {
+
+                }
+                R.id.numberSix -> {
+
+                }
+                R.id.numberSeven -> {
+
+                }
+                R.id.numberEight -> {
+
+                }
+                R.id.numberNine -> {
+
+                }
+                R.id.numberZero -> {
+
+                }
+                R.id.decimalPoint -> {
+
+                }
+                R.id.doneBtn -> {
+
+                }
+
+                R.id.btnCloseIv -> {
+                    findNavController().navigateUp()
+                }
+                R.id.tapToDeleteTv -> {
+
+                }
+                else -> {}
+
+            }
+        }
     }
 }

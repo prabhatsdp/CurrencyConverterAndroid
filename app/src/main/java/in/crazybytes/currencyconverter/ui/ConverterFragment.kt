@@ -1,6 +1,6 @@
 package `in`.crazybytes.currencyconverter.ui
 
-import `in`.crazybytes.currencyconverter.data.models.Currency
+import `in`.crazybytes.currencyconverter.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,20 +10,15 @@ import `in`.crazybytes.currencyconverter.databinding.FragmentConverterBinding
 import `in`.crazybytes.currencyconverter.main.MainViewModel
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
-import `in`.crazybytes.currencyconverter.other.Helper
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ConverterFragment : Fragment() {
+class ConverterFragment : Fragment(), View.OnClickListener{
 
     private var _binding: FragmentConverterBinding? = null
     private val binding get() = _binding!!
@@ -52,27 +47,10 @@ class ConverterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fromCurrencyTitleTv.setOnClickListener {
-
-
-            findNavController().navigate(
-                ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment(SOURCE_FROM)
-            )
-        }
-
-        binding.toCurrencyTitleTv.setOnClickListener {
-            findNavController().navigate(
-                ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment(SOURCE_TO)
-            )
-        }
-
-        binding.fromCurrencyAmountTv.setOnClickListener {
-            findNavController().navigate(
-                ConverterFragmentDirections.actionConverterFragmentToAmountFragment(
-                    binding.fromCurrencyAmountTv.text.toString()
-                )
-            )
-        }
+        binding.fromCurrencyTitleTv.setOnClickListener(this)
+        binding.toCurrencyTitleTv.setOnClickListener (this)
+        binding.fromCurrencyAmountTv.setOnClickListener (this)
+        binding.mcvBtnSwap.setOnClickListener (this)
 
         viewModel.fromCurrency.observe(viewLifecycleOwner) { currency ->
 
@@ -110,8 +88,12 @@ class ConverterFragment : Fragment() {
                 }
                 is MainViewModel.CurrencyRateEvent.Loading -> {
                     binding.progressBar.isVisible = true
+                    binding.toCurrencyAmountTv.text = ""
                 }
-                else -> {}
+
+                is MainViewModel.CurrencyRateEvent.Empty -> {
+                    binding.toCurrencyAmountTv.text = ""
+                }
             }
         }
 
@@ -127,5 +109,36 @@ class ConverterFragment : Fragment() {
 
                 }
             }
+    }
+
+    override fun onClick(v: View?) {
+        v?.let {
+            when(v.id) {
+                R.id.fromCurrencyTitleTv -> {
+
+                    findNavController().navigate(
+                        ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment(SOURCE_FROM)
+                    )
+                }
+
+                R.id.toCurrencyTitleTv -> {
+                    findNavController().navigate(
+                        ConverterFragmentDirections.actionConverterFragmentToSelectCurrencyFragment(SOURCE_TO)
+                    )
+                }
+
+                R.id.fromCurrencyAmountTv -> {
+                    findNavController().navigate(
+                        ConverterFragmentDirections.actionConverterFragmentToAmountFragment(
+                            binding.fromCurrencyAmountTv.text.toString()
+                        )
+                    )
+                }
+
+                R.id.mcvBtnSwap -> {
+                    viewModel.swapCurrencies()
+                }
+            }
+        }
     }
 }

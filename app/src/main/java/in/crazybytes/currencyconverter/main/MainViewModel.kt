@@ -104,6 +104,14 @@ class MainViewModel @Inject constructor(
 
     }
 
+    fun swapCurrencies() {
+        val tempCurrency = fromCurrency.value
+        _fromCurrency.value = toCurrency.value
+        _toCurrency.value = tempCurrency
+
+        convert()
+    }
+
     /**
      * sets [currency] as selected from currency.
      */
