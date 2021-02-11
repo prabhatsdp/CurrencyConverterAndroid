@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.databinding.FragmentAmountBinding
+import `in`.crazybytes.currencyconverter.main.MainViewModel
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
@@ -16,9 +20,13 @@ import androidx.navigation.fragment.navArgs
  * Use the [AmountFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+@AndroidEntryPoint
 class AmountFragment : Fragment(), View.OnClickListener {
 
     private val args: AmountFragmentArgs by navArgs()
+    private val enterAmountViewModel: EnterAmountViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     private var _binding: FragmentAmountBinding? = null
     val binding get() = _binding!!
@@ -28,6 +36,8 @@ class AmountFragment : Fragment(), View.OnClickListener {
         arguments?.let {
 
         }
+
+        enterAmountViewModel.setEnteredAmount(args.amount)
     }
 
     override fun onCreateView(
@@ -52,9 +62,18 @@ class AmountFragment : Fragment(), View.OnClickListener {
         binding.numberSix.setOnClickListener(this)
         binding.numberSeven.setOnClickListener(this)
         binding.numberEight.setOnClickListener(this)
+        binding.numberNine.setOnClickListener(this)
         binding.numberZero.setOnClickListener(this)
         binding.decimalPoint.setOnClickListener(this)
         binding.doneBtn.setOnClickListener(this)
+        binding.tapToDeleteTv.setOnClickListener(this)
+        binding.btnCloseIv.setOnClickListener(this)
+
+
+        enterAmountViewModel.enteredAmount.observe(viewLifecycleOwner) {
+            binding.amountTv.text = it
+            binding.doneBtn.isEnabled = !(it.equals(args.amount) || it.equals("0"))
+        }
     }
 
     companion object {
@@ -72,47 +91,48 @@ class AmountFragment : Fragment(), View.OnClickListener {
         v?.let {
             when(v.id) {
                 R.id.numberOne -> {
-
+                    enterAmountViewModel.appendNumber("1")
                 }
                 R.id.numberTwo -> {
-
+                    enterAmountViewModel.appendNumber("2")
                 }
                 R.id.numberThree -> {
-
+                    enterAmountViewModel.appendNumber("3")
                 }
                 R.id.numberFour -> {
-
+                    enterAmountViewModel.appendNumber("4")
                 }
                 R.id.numberFive -> {
-
+                    enterAmountViewModel.appendNumber("5")
                 }
                 R.id.numberSix -> {
-
+                    enterAmountViewModel.appendNumber("6")
                 }
                 R.id.numberSeven -> {
-
+                    enterAmountViewModel.appendNumber("7")
                 }
                 R.id.numberEight -> {
-
+                    enterAmountViewModel.appendNumber("8")
                 }
                 R.id.numberNine -> {
-
+                    enterAmountViewModel.appendNumber("9")
                 }
                 R.id.numberZero -> {
-
+                    enterAmountViewModel.appendNumber("0")
                 }
                 R.id.decimalPoint -> {
-
+                    enterAmountViewModel.appendDecimal()
                 }
                 R.id.doneBtn -> {
-
+                    mainViewModel.setAmount(binding.amountTv.text.toString())
+                    findNavController().navigateUp()
                 }
 
                 R.id.btnCloseIv -> {
                     findNavController().navigateUp()
                 }
                 R.id.tapToDeleteTv -> {
-
+                    enterAmountViewModel.deleteLastCharacter()
                 }
                 else -> {}
 

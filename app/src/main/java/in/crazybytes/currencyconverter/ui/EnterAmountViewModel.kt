@@ -18,23 +18,68 @@ class EnterAmountViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _enteredAmount = MutableLiveData<String>()
+    private val _enteredAmount = MutableLiveData<String>("")
     val enteredAmount: LiveData<String> = _enteredAmount
 
 
     fun appendNumber(number: String) {
-        // TODO: 11-Feb-21 Add Logic to append number
+
+        val prevAmount = _enteredAmount.value
+        prevAmount?.let {
+            if (it == "0") {
+                if(number != "0") _enteredAmount.postValue(number)
+            } else {
+                _enteredAmount.postValue(prevAmount + number)
+            }
+        }
+
     }
 
-    fun appendDecimal(decimal: String) {
-        // TODO: 11-Feb-21 Add Logic to append decimal
+    fun appendDecimal() {
+
+        val prevAmount = enteredAmount.value
+        prevAmount?.let {
+            if(!it.contains(".")) _enteredAmount.postValue("$it.")
+        }
     }
 
+
+    fun deleteLastCharacter() {
+
+        val prevAmount = _enteredAmount.value
+
+        prevAmount?.let {
+
+            if(it == "0") {
+                return@let
+            }
+
+            if(it.length == 1) {
+                _enteredAmount.postValue(
+                    "0"
+                )
+            } else {
+                _enteredAmount.postValue(
+                    prevAmount.substring(
+                        0,
+                        prevAmount.length - 1
+                    )
+                )
+            }
+
+        }
+    }
 
 
 
     fun setEnteredAmount(amountStr: String) {
-        _enteredAmount.value = amountStr
+
+        if(amountStr[amountStr.length - 1] == '.') {
+            _enteredAmount.value = amountStr.substring(0, amountStr.length - 1)
+        } else {
+            _enteredAmount.value = amountStr
+        }
+
     }
 
 }

@@ -8,4 +8,8 @@ package `in`.crazybytes.currencyconverter.data.models
 data class CurrencyRate(
     val rate: Double,
     val currency: Currency
-)
+) {
+    override fun toString(): String {
+        return "CurrencyRate {rate: $rate, currency: $currency}"
+    }
+}

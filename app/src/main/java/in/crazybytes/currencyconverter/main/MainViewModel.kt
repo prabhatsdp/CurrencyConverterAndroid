@@ -1,7 +1,7 @@
 package `in`.crazybytes.currencyconverter.main
 
 import `in`.crazybytes.currencyconverter.data.models.Currency
-import `in`.crazybytes.currencyconverter.data.models.CurrencyRate
+import `in`.crazybytes.currencyconverter.other.Event
 import `in`.crazybytes.currencyconverter.other.Helper
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import `in`.crazybytes.currencyconverter.utils.Resource
@@ -12,9 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
-import kotlin.math.round
 
 /**
  * Created By Prabhat Pandey for CrazyBytes
@@ -28,32 +26,36 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class CurrencyRateEvent {
-        class Success(val result: CurrencyRate) : CurrencyRateEvent()
+        class Success(val result: String) : CurrencyRateEvent()
         class Failure(val errorText: String) : CurrencyRateEvent()
         object Loading : CurrencyRateEvent()
         object Empty : CurrencyRateEvent()
     }
 
-    private val _fromCurrency = MutableLiveData<Currency>(
-        Currency(
-            "USD",
-            "United States Dollar",
-        "$"
+    private val _fromCurrency = MutableLiveData(
+        Event(
+            Currency(
+                "USD",
+                "United States Dollar",
+                "$"
+            )
         )
     )
-    val fromCurrency: LiveData<Currency> = _fromCurrency
+    val fromCurrency: LiveData<Event<Currency>> = _fromCurrency
 
-    private val _toCurrency = MutableLiveData<Currency>(
-        Currency(
-            "INR",
-             "Indian Rupees",
-            "₹"
+    private val _toCurrency = MutableLiveData(
+        Event(
+            Currency(
+                "INR",
+                "Indian Rupees",
+                "₹"
+            )
         )
     )
-    val toCurrency: LiveData<Currency> = _toCurrency
+    val toCurrency: LiveData<Event<Currency>> = _toCurrency
 
-    private val _amount = MutableLiveData<String>("01")
-    val amount: LiveData<String> = _amount
+    private val _amount = MutableLiveData(Event("1"))
+    val amount: LiveData<Event<String>> = _amount
 
     private val _conversion = MutableLiveData<CurrencyRateEvent>(CurrencyRateEvent.Empty)
     val conversion: LiveData<CurrencyRateEvent> = _conversion
@@ -64,34 +66,43 @@ class MainViewModel @Inject constructor(
      */
     fun convert() {
 
+        Log.d(TAG, "convert: Convert Function Fired. === === === === === ")
+
         try {
 
-            val fromAmount = amount.value!!.toFloatOrNull()
+            val fromAmount = amount.value!!.peekContent().toFloatOrNull()
+            Log.d(
+                TAG,
+                "convert: Converting $fromAmount ${fromCurrency.value!!.peekContent().code} to ${toCurrency.value!!.peekContent().code}"
+            )
 
             if (fromAmount == null) {
                 _conversion.value = CurrencyRateEvent.Failure("Not a valid amount.")
+                Log.d(TAG, "convert: Conversion Failed. =======================")
             }
 
             viewModelScope.launch(dispatchers.io) {
                 _conversion.postValue(CurrencyRateEvent.Loading)
-
-                when (val ratesResponse = repository.getRates(fromCurrency.value!!.code)) {
+                Log.d(TAG, "convert: Conversion Loading. =========================")
+                when (val ratesResponse =
+                    repository.getRates(fromCurrency.value!!.peekContent().code)) {
                     is Resource.Error -> {
                         _conversion.postValue(CurrencyRateEvent.Failure(ratesResponse.message!!))
                     }
                     is Resource.Success -> {
                         val rates = ratesResponse.data!!.rates
-                        val rate = Helper.getRateForCurrency(toCurrency.value!!.code, rates)
+                        val rate =
+                            Helper.getRateForCurrency(toCurrency.value!!.peekContent().code, rates)
+                        Log.d(TAG, "convert: Conversion Success. ===================")
 
                         if (rate == null) {
                             _conversion.postValue(CurrencyRateEvent.Failure("Unexpected Error"))
+                            Log.d(TAG, "convert: Conversion Failed 2. =============")
                         } else {
-//                        val convertedCurrency = round(fromAmount!! * rate.rate * 100) / 100
-                            _conversion.postValue(
-                                CurrencyRateEvent.Success(
-                                    rate
-                                )
-                            )
+                            val convertedCurrency = String.format("%.2f", fromAmount!! * rate)
+                            _conversion.postValue(CurrencyRateEvent.Success(convertedCurrency))
+
+                            Log.d(TAG, "convert: Conversion Success and Value posted to live data.")
                         }
 
                     }
@@ -105,9 +116,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun swapCurrencies() {
-        val tempCurrency = fromCurrency.value
-        _fromCurrency.value = toCurrency.value
-        _toCurrency.value = tempCurrency
+        val tempCurrency = fromCurrency.value!!.peekContent()
+        _fromCurrency.value = Event(toCurrency.value!!.peekContent())
+        _toCurrency.value = Event(tempCurrency)
 
         convert()
     }
@@ -117,7 +128,7 @@ class MainViewModel @Inject constructor(
      */
     fun setSelectedFromCurrency(currency: Currency) {
         Log.d(TAG, "setSelectedFromCurrency: Setting From Currency.")
-        _fromCurrency.value = currency
+        _fromCurrency.value = Event(currency)
 
         convert()
     }
@@ -127,20 +138,26 @@ class MainViewModel @Inject constructor(
      */
     fun setSelectedToCurrency(currency: Currency) {
         Log.d(TAG, "setSelectedToCurrency: Setting To Currency.")
-        _toCurrency.value = currency
+        _toCurrency.value = Event(currency)
 
         convert()
     }
 
     fun setAmount(amountStr: String) {
-        val amount = amountStr.toFloatOrNull()
-        if(amount != null) {
-            _amount.value = String.format("%.2f", amount)
+        val tempAmount = amountStr.toFloatOrNull()
+        if (tempAmount != null) {
+            _amount.value = Event(String.format("%.2f", tempAmount))
         } else {
-            _amount.value = String.format("%.2f", 0)
+            _amount.value = Event(String.format("%.2f", 0))
         }
 
+        Log.d(
+            TAG,
+            "setAmount: AmountString = $amountStr and amount = ${amount.value!!.peekContent()}"
+        )
+
         convert()
+
     }
 
     companion object {

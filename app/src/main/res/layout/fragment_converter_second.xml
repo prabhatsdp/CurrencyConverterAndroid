@@ -8,17 +8,6 @@
     tools:context=".ui.ConverterFragment"
     android:clipToPadding="false">
 
-<!--    Test Code-->
-
-    <TextSwitcher
-        android:id="@+id/titleSwitcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/fromTitle"
-        app:layout_constraintStart_toStartOf="@id/fromTitle"
-        app:layout_constraintEnd_toEndOf="@id/fromTitle"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <TextView
         android:id="@+id/fromTitle"
         android:layout_width="match_parent"
@@ -49,7 +38,7 @@
         app:layout_constraintVertical_bias="1">
 
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/fromCurrencyTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,16 +76,8 @@
             app:drawableEndCompat="@drawable/ic_edit"
             app:drawableTint="@color/white"
             />
-<!--        -->
-<!--        <ImageView-->
-<!--            android:layout_width="16dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/fromCurrencyAmountTv"-->
-<!--            app:layout_constraintTop_toTopOf="@id/fromCurrencyAmountTv"-->
-<!--            android:src="@drawable/ic_edit_24"-->
-<!--            app:tint="@color/white" />-->
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/fromCurrencySymbolTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +87,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="$" />
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/fromCurrencyCodeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,18 +100,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/ivBtnConvert"-->
-    <!--        android:layout_width="100dp"-->
-    <!--        android:layout_height="100dp"-->
-    <!--        android:clickable="true"-->
-    <!--        android:focusable="true"-->
-    <!--        android:src="@drawable/ic_convert"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/guideline"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/guideline" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -166,7 +135,7 @@
         app:layout_constraintTop_toBottomOf="@id/mcvBtnSwap"
         app:layout_constraintVertical_bias="0.0">
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/toCurrencyCodeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -200,7 +169,7 @@
             tools:text="100.00" />
 
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/toCurrencySymbolTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -211,7 +180,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="$" />
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/toCurrencyTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
