@@ -6,6 +6,7 @@ import `in`.crazybytes.currencyconverter.main.MainViewModel
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
 import android.graphics.Color
+import android.graphics.Color.red
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -21,6 +22,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,9 +63,13 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         binding.fromCurrencyTitleTv.setOnClickListener(this)
         binding.toCurrencyTitleTv.setOnClickListener(this)
         binding.fromCurrencyAmountTv.setOnClickListener(this)
-        binding.mcvBtnSwap.setOnClickListener(this)
+        binding.fabBtnSwap.setOnClickListener(this)
 
+        //info: Setting TextSwitcher
         setFactoryAndAnimToAllTextSwitchers(activity as AppCompatActivity)
+
+        //info: Setting Chart Details
+        setupChart(activity as AppCompatActivity)
 
 
         viewModel.fromCurrency.observe(viewLifecycleOwner) { currencyEvent ->
@@ -114,31 +123,77 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         viewModel.conversion.observe(viewLifecycleOwner) { currencyRateEvent ->
 
-                when (currencyRateEvent) {
-                    is MainViewModel.CurrencyRateEvent.Success -> {
-                        Log.d(TAG, "onViewCreated: ConvertedValue:- {${currencyRateEvent.result}}")
-                        binding.toCurrencyAmountTv.text = currencyRateEvent.result
-                        binding.progressBar.isVisible = false
-                    }
-
-                    is MainViewModel.CurrencyRateEvent.Failure -> {
-                        binding.progressBar.isVisible = false
-                        Toast.makeText(context, currencyRateEvent.errorText, Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    is MainViewModel.CurrencyRateEvent.Loading -> {
-                        binding.progressBar.isVisible = true
-                        binding.toCurrencyAmountTv.text = ""
-                    }
-
-                    is MainViewModel.CurrencyRateEvent.Empty -> {
-                        binding.toCurrencyAmountTv.text = ""
-                    }
+            when (currencyRateEvent) {
+                is MainViewModel.CurrencyRateEvent.Success -> {
+                    Log.d(TAG, "onViewCreated: ConvertedValue:- {${currencyRateEvent.result}}")
+                    binding.toCurrencyAmountTv.text = currencyRateEvent.result
+                    binding.progressBar.isVisible = false
                 }
+
+                is MainViewModel.CurrencyRateEvent.Failure -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(context, currencyRateEvent.errorText, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                is MainViewModel.CurrencyRateEvent.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.toCurrencyAmountTv.text = ""
+                }
+
+                is MainViewModel.CurrencyRateEvent.Empty -> {
+                    binding.toCurrencyAmountTv.text = ""
+                }
+            }
 
 
         }
 
+    }
+
+    private fun setupChart(appCompatActivity: AppCompatActivity) {
+        val entries = ArrayList<Entry>()
+
+//Part2
+        entries.add(Entry(1f, 10f))
+        entries.add(Entry(2f, 2f))
+        entries.add(Entry(3f, 7f))
+        entries.add(Entry(4f, 20f))
+        entries.add(Entry(5f, 16f))
+
+//Part3
+        val vl = LineDataSet(entries, "My Type")
+
+//Part4
+        vl.setDrawValues(false)
+        vl.setDrawFilled(true)
+        vl.lineWidth = 3f
+        vl.fillColor = R.color.gray
+        vl.fillAlpha = R.color.red
+
+        //Part5
+        binding.lineChartView.xAxis.labelRotationAngle = 0f
+
+//Part6
+        binding.lineChartView.data = LineData(vl)
+
+//Part7
+        binding.lineChartView.axisRight.isEnabled = false
+//        binding.lineChartView.xAxis.axisMaximum = j + 0.1f
+
+////Part8
+//        binding.lineChartView.setTouchEnabled(true)
+//        binding.lineChartView.setPinchZoom(true)
+
+//Part9
+        binding.lineChartView.description.text = "Days"
+        binding.lineChartView.setNoDataText("No forex yet!")
+
+//Part10
+        binding.lineChartView.animateX(1800, Easing.EaseInExpo)
+
+//Part11
+//        val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
+//        binding.lineChartView.marker = markerView
     }
 
     private fun setFactoryAndAnimToAllTextSwitchers(activity: AppCompatActivity) {
@@ -274,7 +329,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
                     )
                 }
 
-                R.id.mcvBtnSwap -> {
+                R.id.fabBtnSwap -> {
                     viewModel.swapCurrencies()
                 }
             }

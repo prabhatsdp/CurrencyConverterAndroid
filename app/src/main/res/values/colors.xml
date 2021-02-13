@@ -12,7 +12,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparentWhite">#66FFFFFF</color>
     <color name="extraTransparentWhite">#22FFFFFF</color>
+    <color name="ultraTransparentWhite">#11FFFFFF</color>
     <color name="transparentPurple">#66623CEA</color>
+    <color name="ultraTransparentPurple">#11623CEA</color>
     <color name="gray">#11000000</color>
+    <color name="red">#FFFF0000</color>
 
 </resources>

@@ -31,7 +31,7 @@
         app:layout_constraintStart_toEndOf="@id/currencySymbolTv"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="US Dollar"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textColor="@color/purple_500"
         android:layout_marginStart="16dp"
         android:id="@+id/currencyTitleTv"/>
@@ -42,7 +42,6 @@
         app:layout_constraintBaseline_toBaselineOf="@id/currencyTitleTv"
         app:layout_constraintStart_toEndOf="@id/currencyTitleTv"
         tools:text="USD"
-        android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/transparentPurple"
         android:layout_marginStart="8dp"

@@ -46,7 +46,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
@@ -97,4 +97,7 @@ dependencies {
 
     // Animations And Transitions 
     implementation "com.andkulikov:transitionseverywhere:1.8.1"
+
+    // MPAndroid Chart Library for charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

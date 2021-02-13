@@ -42,7 +42,7 @@
         android:background="@drawable/bg_card_dark"
         android:paddingHorizontal="24dp"
         android:paddingVertical="24dp"
-        app:layout_constraintBottom_toTopOf="@id/mcvBtnSwap"
+        app:layout_constraintBottom_toTopOf="@id/fabBtnSwap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -133,7 +133,7 @@
     <!--        app:layout_constraintTop_toTopOf="@+id/guideline" />-->
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -163,7 +163,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mcvBtnSwap"
+        app:layout_constraintTop_toBottomOf="@id/fabBtnSwap"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
@@ -243,16 +243,16 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/mcvBtnSwap"
+        android:id="@+id/fabBtnSwap"
         android:layout_width="58dp"
         android:layout_height="58dp"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="32dp"
         app:cardElevation="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline">
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop">
 
         <ImageView
             android:id="@+id/imageView"
