@@ -2,6 +2,7 @@ package `in`.crazybytes.currencyconverter.main
 
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.data.models.RateHistory
+import `in`.crazybytes.currencyconverter.data.repositories.MainRepository
 import `in`.crazybytes.currencyconverter.other.Event
 import `in`.crazybytes.currencyconverter.other.Helper
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider

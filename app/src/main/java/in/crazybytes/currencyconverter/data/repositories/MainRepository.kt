@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.main
+package `in`.crazybytes.currencyconverter.data.repositories
 
 import `in`.crazybytes.currencyconverter.data.models.CurrencyRatesResponse
 import `in`.crazybytes.currencyconverter.data.models.RatesHistoryResponse

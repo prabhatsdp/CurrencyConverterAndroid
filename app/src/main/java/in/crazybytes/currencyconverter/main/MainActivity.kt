@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.ui
+package `in`.crazybytes.currencyconverter.main
 
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.databinding.ActivityMainBinding

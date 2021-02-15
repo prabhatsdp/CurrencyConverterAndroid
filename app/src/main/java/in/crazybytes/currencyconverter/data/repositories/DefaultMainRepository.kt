@@ -1,8 +1,7 @@
-package `in`.crazybytes.currencyconverter.main
+package `in`.crazybytes.currencyconverter.data.repositories
 
 import `in`.crazybytes.currencyconverter.data.CurrencyRateApi
 import `in`.crazybytes.currencyconverter.data.models.CurrencyRatesResponse
-import `in`.crazybytes.currencyconverter.data.models.RateHistory
 import `in`.crazybytes.currencyconverter.data.models.RatesHistoryResponse
 import `in`.crazybytes.currencyconverter.utils.Resource
 import javax.inject.Inject
