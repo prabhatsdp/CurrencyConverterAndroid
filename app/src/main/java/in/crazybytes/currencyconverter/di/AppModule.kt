@@ -5,6 +5,7 @@ import `in`.crazybytes.currencyconverter.main.DefaultMainRepository
 import `in`.crazybytes.currencyconverter.main.MainRepository
 import `in`.crazybytes.currencyconverter.other.Constants.BASE_URL
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,10 +35,12 @@ object AppModule {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
 
+        val gson = GsonBuilder().setDateFormat("yyyy-MM-dd").create()
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(CurrencyRateApi::class.java)
     }

@@ -5,6 +5,11 @@ package `in`.crazybytes.currencyconverter.other
  * on Thursday, 11 February, 2021 at 8:40 PM
  */
 
+/**
+ * This class is a wrapper class for the the object [T]
+ * It provides the function of checking if the result
+ * has been handled already or not.
+ */
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false

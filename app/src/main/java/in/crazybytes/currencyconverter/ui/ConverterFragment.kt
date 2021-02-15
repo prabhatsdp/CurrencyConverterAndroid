@@ -1,12 +1,13 @@
 package `in`.crazybytes.currencyconverter.ui
 
 import `in`.crazybytes.currencyconverter.R
-import `in`.crazybytes.currencyconverter.databinding.FragmentConverterSecondBinding
+import `in`.crazybytes.currencyconverter.data.models.RateHistory
+import `in`.crazybytes.currencyconverter.databinding.FragmentConverterBinding
 import `in`.crazybytes.currencyconverter.main.MainViewModel
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
+import `in`.crazybytes.currencyconverter.ui.views.CustomChartMarkerView
 import android.graphics.Color
-import android.graphics.Color.red
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -17,21 +18,22 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ConverterFragment : Fragment(), View.OnClickListener {
 
-    private var _binding: FragmentConverterSecondBinding? = null
+    private var _binding: FragmentConverterBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: MainViewModel by activityViewModels()
@@ -43,6 +45,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
         viewModel.convert()
+        viewModel.fetchRatesHistory()
     }
 
     override fun onCreateView(
@@ -50,7 +53,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentConverterSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentConverterBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -69,9 +72,10 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         setFactoryAndAnimToAllTextSwitchers(activity as AppCompatActivity)
 
         //info: Setting Chart Details
-        setupChart(activity as AppCompatActivity)
+//        setupChart(activity as AppCompatActivity)
 
 
+        //info: Observing [fromCurrency] from mainViewModel
         viewModel.fromCurrency.observe(viewLifecycleOwner) { currencyEvent ->
 
             currencyEvent.getContentIfNotHandled().let { currency ->
@@ -91,6 +95,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
 
+        //info: observing  [toCurrency] from mainViewModel
         viewModel.toCurrency.observe(viewLifecycleOwner) { currencyEvent ->
 
             currencyEvent.getContentIfNotHandled().let { currency ->
@@ -109,6 +114,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
 
+        //info: observing the amount that is to be converted
         viewModel.amount.observe(viewLifecycleOwner) { amountEvent ->
 
             amountEvent.getContentIfNotHandled().let {
@@ -121,6 +127,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
 
+        //info: observing the conversion rate
         viewModel.conversion.observe(viewLifecycleOwner) { currencyRateEvent ->
 
             when (currencyRateEvent) {
@@ -148,52 +155,92 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
 
+        //info: observer for rateHistoryLiveData
+
+        viewModel.rateHistoryLiveData.observe(viewLifecycleOwner) { rateHistoryEvent ->
+
+            when (rateHistoryEvent) {
+
+                is MainViewModel.RateHistoryEvent.Loading -> {
+                    binding.chartProgressBar.isVisible = true
+                }
+
+                is MainViewModel.RateHistoryEvent.Failure -> {
+                    binding.chartProgressBar.isVisible = false
+                }
+
+                is MainViewModel.RateHistoryEvent.Success -> {
+
+                    setupChart(activity as AppCompatActivity, rateHistoryEvent.result)
+
+                    binding.chartProgressBar.isVisible = false
+                }
+
+                is MainViewModel.RateHistoryEvent.Empty -> {
+                    binding.chartProgressBar.isVisible = false
+                }
+
+            }
+        }
+
     }
 
-    private fun setupChart(appCompatActivity: AppCompatActivity) {
-        val entries = ArrayList<Entry>()
+    private fun setupChart(appCompatActivity: AppCompatActivity, rateHistory: RateHistory) {
 
-//Part2
-        entries.add(Entry(1f, 10f))
-        entries.add(Entry(2f, 2f))
-        entries.add(Entry(3f, 7f))
-        entries.add(Entry(4f, 20f))
-        entries.add(Entry(5f, 16f))
 
-//Part3
-        val vl = LineDataSet(entries, "My Type")
+        val dataSet = LineDataSet(rateHistory.entries, "Rate")
 
-//Part4
-        vl.setDrawValues(false)
-        vl.setDrawFilled(true)
-        vl.lineWidth = 3f
-        vl.fillColor = R.color.gray
-        vl.fillAlpha = R.color.red
+        with(dataSet) {
+            setDrawValues(false)
+            setDrawFilled(true)
+            fillDrawable = getDrawable(appCompatActivity, R.drawable.bg_fade_gradient)
+            lineWidth = 4f
+            color = getColor(appCompatActivity, R.color.purple_500)
+            mode = LineDataSet.Mode.CUBIC_BEZIER
+            setDrawCircleHole(true)
+            circleRadius = 6f
+            circleHoleRadius = 3f
+            setCircleColor(getColor(appCompatActivity, R.color.purple_500))
+            valueTextSize = 24f
+        }
 
-        //Part5
-        binding.lineChartView.xAxis.labelRotationAngle = 0f
 
-//Part6
-        binding.lineChartView.data = LineData(vl)
 
-//Part7
-        binding.lineChartView.axisRight.isEnabled = false
-//        binding.lineChartView.xAxis.axisMaximum = j + 0.1f
+        with(binding.lineChartView) {
 
-////Part8
-//        binding.lineChartView.setTouchEnabled(true)
-//        binding.lineChartView.setPinchZoom(true)
+            //info: Setting The Data for The line chart here
+            data = LineData(dataSet)
 
-//Part9
-        binding.lineChartView.description.text = "Days"
-        binding.lineChartView.setNoDataText("No forex yet!")
+            xAxis.labelRotationAngle = 0f
+            xAxis.setCenterAxisLabels(false)
+            xAxis.granularity = 1f
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.setDrawGridLines(false)
+            xAxis.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return rateHistory.labels[value.toInt()]
+                }
 
-//Part10
-        binding.lineChartView.animateX(1800, Easing.EaseInExpo)
+            }
 
-//Part11
-//        val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
-//        binding.lineChartView.marker = markerView
+            axisLeft.setDrawGridLines(false)
+            axisRight.setDrawGridLines(false)
+
+            axisRight.isEnabled = false
+            axisLeft.isEnabled = false
+            description.text = ""
+            setNoDataText("No Data available!")
+            legend.isEnabled = false
+
+            //animate function can also be used to animate the chart here in place of invalidate()
+
+            invalidate()
+        }
+
+
+        //info: CustomMarkerView Code
+        val markerView = CustomChartMarkerView(appCompatActivity, rateHistory.toCurrency.symbol)
+        binding.lineChartView.marker = markerView
     }
 
     private fun setFactoryAndAnimToAllTextSwitchers(activity: AppCompatActivity) {

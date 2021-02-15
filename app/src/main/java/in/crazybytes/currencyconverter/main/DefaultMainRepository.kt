@@ -2,8 +2,9 @@ package `in`.crazybytes.currencyconverter.main
 
 import `in`.crazybytes.currencyconverter.data.CurrencyRateApi
 import `in`.crazybytes.currencyconverter.data.models.CurrencyRatesResponse
+import `in`.crazybytes.currencyconverter.data.models.RateHistory
+import `in`.crazybytes.currencyconverter.data.models.RatesHistoryResponse
 import `in`.crazybytes.currencyconverter.utils.Resource
-import java.lang.Exception
 import javax.inject.Inject
 
 /**
@@ -16,19 +17,41 @@ class DefaultMainRepository @Inject constructor(
 ) : MainRepository {
 
     override suspend fun getRates(base: String): Resource<CurrencyRatesResponse> {
-        return  try {
+        return try {
 
             val response = api.getRates(base)
             val result = response.body()
-            if(response.isSuccessful && result != null) {
+            if (response.isSuccessful && result != null) {
                 Resource.Success(result)
             } else {
                 Resource.Error(response.message())
             }
 
         } catch (e: Exception) {
-            Resource.Error(e.message?: "An Error Occurred.")
+            Resource.Error(e.message ?: "An Error Occurred.")
         }
     }
 
+    override suspend fun getRatesHistory(
+        startAt: String,
+        endAt: String,
+        base: String,
+        symbols: String
+    ): Resource<RatesHistoryResponse> {
+
+        return try {
+            val response = api.getRatesHistory(startAt, endAt, base, symbols)
+            val result = response.body()
+            if (response.isSuccessful && result != null) {
+                Resource.Success(result)
+            } else {
+                Resource.Error(response.message())
+            }
+
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "An Error Occurred while fetching history.")
+        }
+
+
+    }
 }
