@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.ui
+package `in`.crazybytes.currencyconverter.features.currency
 
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.databinding.ItemSelectCurrencyBinding

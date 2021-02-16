@@ -1,9 +1,8 @@
-package `in`.crazybytes.currencyconverter.ui
+package `in`.crazybytes.currencyconverter.features.main
 
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.data.models.RateHistory
 import `in`.crazybytes.currencyconverter.databinding.FragmentConverterBinding
-import `in`.crazybytes.currencyconverter.main.MainViewModel
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
 import `in`.crazybytes.currencyconverter.ui.views.CustomChartMarkerView
@@ -18,7 +17,6 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment

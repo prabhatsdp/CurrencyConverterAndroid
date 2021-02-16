@@ -7,15 +7,15 @@
 
     <fragment
         android:id="@+id/converterFragment"
-        android:name="in.crazybytes.currencyconverter.ui.ConverterFragment"
+        android:name="in.crazybytes.currencyconverter.features.main.ConverterFragment"
         android:label="@string/convert"
         tools:layout="@layout/fragment_converter">
         <action
             android:id="@+id/action_converterFragment_to_selectCurrencyFragment"
             app:destination="@id/selectCurrencyFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right">
             <argument
                 app:argType="string"
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/amountFragment"
-        android:name="in.crazybytes.currencyconverter.ui.AmountFragment"
+        android:name="in.crazybytes.currencyconverter.features.amount.AmountFragment"
         android:label="Enter Amount"
         tools:layout="@layout/fragment_amount" >
         <argument
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectCurrencyFragment"
-        android:name="in.crazybytes.currencyconverter.ui.SelectCurrencyFragment"
+        android:name="in.crazybytes.currencyconverter.features.currency.SelectCurrencyFragment"
         android:label="Select Currency"
         tools:layout="@layout/fragment_select_currency" >
         <argument

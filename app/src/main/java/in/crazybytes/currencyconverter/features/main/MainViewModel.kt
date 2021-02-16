@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.main
+package `in`.crazybytes.currencyconverter.features.main
 
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.data.models.RateHistory

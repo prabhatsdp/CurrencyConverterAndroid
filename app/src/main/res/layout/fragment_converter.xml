@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:padding="32dp"
-    tools:context=".ui.ConverterFragment">
+    tools:context=".features.main.ConverterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fromCurrencyWrap"

@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.ui
+package `in`.crazybytes.currencyconverter.features.amount
 
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import androidx.lifecycle.LiveData

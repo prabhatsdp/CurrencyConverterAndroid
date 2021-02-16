@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.ui
+package `in`.crazybytes.currencyconverter.features.currency
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,20 +8,14 @@ import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.databinding.FragmentSelectCurrencyBinding
-import `in`.crazybytes.currencyconverter.main.MainViewModel
+import `in`.crazybytes.currencyconverter.features.main.MainViewModel
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
 import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
 import `in`.crazybytes.currencyconverter.utils.CurrencySelectionListener
-import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 

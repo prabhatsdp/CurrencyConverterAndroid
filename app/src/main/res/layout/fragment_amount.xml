@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.AmountFragment"
+    tools:context=".features.amount.AmountFragment"
     android:background="@color/purple_500"
     android:paddingHorizontal="32dp"
     android:paddingVertical="24dp">

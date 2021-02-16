@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.ui
+package `in`.crazybytes.currencyconverter.features.amount
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.databinding.FragmentAmountBinding
-import `in`.crazybytes.currencyconverter.main.MainViewModel
+import `in`.crazybytes.currencyconverter.features.main.MainViewModel
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
