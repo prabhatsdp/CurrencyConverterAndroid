@@ -2,6 +2,17 @@
 
 A simple and modern currency converter app for Android platform. The app is developed using Kotlin, MVVM, Dagger Hilt, Retrofit. Feel free :smile: to provide feedback or suggestions :loudspeaker: if any.
 
+## **Screenshots** ##
+
+<p align="center">
+  <img src="https://i.imgur.com/2fxhyat.png">
+</p>
+<p align="center">
+  <img src="https://i.imgur.com/EhEvVNY.gif">
+</p>
+
+
+
 ## **Lanuguages, Frameworks and Libraries Used:**
 
 | Stack              | Usage                            |
