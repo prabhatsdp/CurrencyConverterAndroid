@@ -16,7 +16,7 @@ A simple and modern currency converter app for Android platform. The app is deve
 
 <br/>
 
-### **Contributors** ###
+## **Contributors** ##
 
 ##### Prabhat Pandey #####
 
