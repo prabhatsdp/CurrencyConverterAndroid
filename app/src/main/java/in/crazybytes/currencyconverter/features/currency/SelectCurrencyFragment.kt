@@ -70,9 +70,6 @@ class SelectCurrencyFragment : Fragment() {
 
         val currencySelectionListener = object : CurrencySelectionListener {
             override fun onCurrencySelected(selectedCurrency: Currency) {
-                Toast
-                    .makeText(context, "${selectedCurrency.code} clicked", Toast.LENGTH_SHORT)
-                    .show()
 
                 if(args.source == SOURCE_FROM) {
                     mainViewModel.setSelectedFromCurrency(selectedCurrency)
