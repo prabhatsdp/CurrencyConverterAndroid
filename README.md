@@ -13,3 +13,13 @@ A simple and modern currency converter app for Android platform. The app is deve
 | Dagger Hilt        | Dependency Injection             |
 | MPAndroidChart     | Rate History Chart               |
 | ExchangeRateApi.io | To fetch currency exchange rates |
+
+<br/>
+
+### **Contributors** ###
+
+##### Prabhat Pandey #####
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/iPrabhat_?label=Follow&style=social)](https://twitter.com/iPrabhat_) <br/>
+
+[![Twitter Follow](https://img.shields.io/github/followers/iPrabhat404?label=Follow&style=social)](https://github.com/iPrabhat404)
