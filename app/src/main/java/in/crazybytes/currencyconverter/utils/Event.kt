@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.other
+package `in`.crazybytes.currencyconverter.utils
 
 /**
  * Created By Prabhat Pandey for CrazyBytes

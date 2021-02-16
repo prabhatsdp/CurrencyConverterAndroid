@@ -1,4 +1,4 @@
-package `in`.crazybytes.currencyconverter.other
+package `in`.crazybytes.currencyconverter.utils
 
 /**
  * Created By Prabhat Pandey for CrazyBytes
@@ -9,4 +9,5 @@ object Constants {
     const val BASE_URL = "https://api.exchangeratesapi.io"
     const val SOURCE_FROM = "from"
     const val SOURCE_TO = "to"
+    const val NUM_DAYS_QUERY = 7
  }

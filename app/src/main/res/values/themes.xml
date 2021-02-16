@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/niramit</item>
+        <item name="fontFamily">@font/niramit</item>
     </style>
 
     <style name="ToolbarColoredBackArrow" parent="Theme.CurrencyConverter">

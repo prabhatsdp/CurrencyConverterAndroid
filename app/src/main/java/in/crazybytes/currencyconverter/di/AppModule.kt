@@ -3,7 +3,7 @@ package `in`.crazybytes.currencyconverter.di
 import `in`.crazybytes.currencyconverter.data.CurrencyRateApi
 import `in`.crazybytes.currencyconverter.data.repositories.DefaultMainRepository
 import `in`.crazybytes.currencyconverter.data.repositories.MainRepository
-import `in`.crazybytes.currencyconverter.other.Constants.BASE_URL
+import `in`.crazybytes.currencyconverter.utils.Constants.BASE_URL
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import com.google.gson.GsonBuilder
 import dagger.Module

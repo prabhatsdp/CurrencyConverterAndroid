@@ -3,21 +3,19 @@ package `in`.crazybytes.currencyconverter.features.main
 import `in`.crazybytes.currencyconverter.R
 import `in`.crazybytes.currencyconverter.data.models.RateHistory
 import `in`.crazybytes.currencyconverter.databinding.FragmentConverterBinding
-import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_FROM
-import `in`.crazybytes.currencyconverter.other.Constants.SOURCE_TO
+import `in`.crazybytes.currencyconverter.utils.Constants.SOURCE_FROM
+import `in`.crazybytes.currencyconverter.utils.Constants.SOURCE_TO
 import `in`.crazybytes.currencyconverter.ui.views.CustomChartMarkerView
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -67,7 +65,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         binding.fabBtnSwap.setOnClickListener(this)
 
         //info: Setting TextSwitcher
-        setFactoryAndAnimToAllTextSwitchers(activity as AppCompatActivity)
+        setAnimationToAllTextSwitchers(activity as AppCompatActivity)
 
         //info: Setting Chart Details
 //        setupChart(activity as AppCompatActivity)
@@ -203,7 +201,6 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         }
 
 
-
         with(binding.lineChartView) {
 
             //info: Setting The Data for The line chart here
@@ -214,21 +211,25 @@ class ConverterFragment : Fragment(), View.OnClickListener {
             xAxis.granularity = 1f
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
+            xAxis.textSize = 10f
+            xAxis.typeface = ResourcesCompat.getFont(appCompatActivity, R.font.niramit)
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return rateHistory.labels[value.toInt()]
                 }
-
             }
 
-            axisLeft.setDrawGridLines(false)
-            axisRight.setDrawGridLines(false)
 
-            axisRight.isEnabled = false
+            axisLeft.setDrawGridLines(false)
             axisLeft.isEnabled = false
+
+            axisRight.setDrawGridLines(false)
+            axisRight.isEnabled = false
+
             description.text = ""
             setNoDataText("No Data available!")
             legend.isEnabled = false
+            extraBottomOffset = 10f
 
             //animate function can also be used to animate the chart here in place of invalidate()
 
@@ -241,91 +242,28 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         binding.lineChartView.marker = markerView
     }
 
-    private fun setFactoryAndAnimToAllTextSwitchers(activity: AppCompatActivity) {
+    private fun setAnimationToAllTextSwitchers(activity: AppCompatActivity) {
 
         val textEnterUp = AnimationUtils.loadAnimation(activity, R.anim.text_enter_up)
         val textEnterDown = AnimationUtils.loadAnimation(activity, R.anim.text_enter_down)
         val textExitUp = AnimationUtils.loadAnimation(activity, R.anim.text_exit_up)
         val textExitDown = AnimationUtils.loadAnimation(activity, R.anim.text_exit_down)
 
-        binding.fromCurrencyTitleTv.setFactory {
-            val textView = TextView(activity)
-            textView.gravity = Gravity.END
-            textView.textSize = 16f
-            textView.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
-            textView.setTextColor(Color.WHITE)
-            textView.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_arrow_drop_down_white,
-                0
-            )
-            textView.compoundDrawablePadding = 8
-            textView
-        }
-
         binding.fromCurrencyTitleTv.inAnimation = textEnterDown
         binding.fromCurrencyTitleTv.outAnimation = textExitUp
-
-        binding.fromCurrencyCodeTv.setFactory {
-            val textView = TextView(activity)
-            textView.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            textView.textSize = 20f
-            textView.setTextColor(getColor(activity, R.color.transparentWhite))
-            textView
-        }
 
         binding.fromCurrencyCodeTv.inAnimation = textEnterDown
         binding.fromCurrencyCodeTv.outAnimation = textExitUp
 
-        binding.fromCurrencySymbolTv.setFactory {
-            val textView = TextView(activity)
-            textView.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            textView.textSize = 20f
-            textView.setTextColor(getColor(activity, R.color.transparentWhite))
-            textView
-        }
-
         binding.fromCurrencySymbolTv.inAnimation = textEnterDown
         binding.fromCurrencySymbolTv.outAnimation = textExitUp
 
-        binding.toCurrencyTitleTv.setFactory {
-            val textView = TextView(activity)
-            textView.gravity = Gravity.END
-            textView.textSize = 16f
-            textView.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
-            textView.setTextColor(getColor(activity, R.color.purple_500))
-            textView.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_arrow_drop_down_purple,
-                0
-            )
-            textView.compoundDrawablePadding = 8
-            textView
-        }
 
         binding.toCurrencyTitleTv.inAnimation = textEnterUp
         binding.toCurrencyTitleTv.outAnimation = textExitDown
 
-        binding.toCurrencyCodeTv.setFactory {
-            val textView = TextView(activity)
-            textView.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            textView.textSize = 20f
-            textView.setTextColor(getColor(activity, R.color.transparentPurple))
-            textView
-        }
-
         binding.toCurrencyCodeTv.inAnimation = textEnterUp
         binding.toCurrencyCodeTv.outAnimation = textExitDown
-
-        binding.toCurrencySymbolTv.setFactory {
-            val textView = TextView(activity)
-            textView.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            textView.textSize = 20f
-            textView.setTextColor(getColor(activity, R.color.transparentPurple))
-            textView
-        }
 
         binding.toCurrencySymbolTv.inAnimation = textEnterUp
         binding.toCurrencySymbolTv.outAnimation = textExitDown

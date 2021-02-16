@@ -1,11 +1,8 @@
-package `in`.crazybytes.currencyconverter.other
+package `in`.crazybytes.currencyconverter.utils
 
 import `in`.crazybytes.currencyconverter.data.models.Currency
-import `in`.crazybytes.currencyconverter.data.models.CurrencyRate
 import `in`.crazybytes.currencyconverter.data.models.Rates
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -26,10 +23,11 @@ object Helper {
         return null
     }
 
-    fun formatDateToDDMMM(date: Date): String {
-        val formatter = SimpleDateFormat("dd MMM", Locale.ENGLISH)
-        return formatter.format(date)
-    }
+    fun getQueryDateStrFromDate(date: Date) : String =
+        SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date)
+
+    fun formatDateToDDMMM(date: Date): String =
+        SimpleDateFormat("dd MMM", Locale.ENGLISH).format(date)
 
     fun formatCurrency(amount: Float, symbol: String?) : String {
         val amountStr = String.format("%.2f", amount)
@@ -40,14 +38,10 @@ object Helper {
         }
     }
 
-    fun roundToTwoDecimalPlacesString(amount: Double) : String {
-        return String.format("%.2f", amount)
-    }
+    fun roundToTwoDecimalPlacesString(amount: Double) : String = String.format("%.2f", amount)
 
 
-    fun roundToFourDecimalPlacesString(amount: Double) : String {
-        return String.format("%.4f", amount)
-    }
+    fun roundToFourDecimalPlacesString(amount: Double) : String = String.format("%.4f", amount)
 
 
     fun getRateForCurrency(currencyCode: String, rates: Rates): Double? =

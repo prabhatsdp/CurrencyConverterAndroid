@@ -5,8 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    android:padding="32dp"
+    android:paddingHorizontal="32dp"
+    android:paddingVertical="16dp"
     tools:context=".features.main.ConverterFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:text="@string/convert"
+        android:id="@+id/pageTitle"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        android:textSize="24sp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fromCurrencyWrap"
@@ -17,11 +31,11 @@
         android:clipToPadding="false"
         android:paddingHorizontal="24dp"
         android:paddingVertical="24dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="@id/guidelineTop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1">
+        app:layout_constraintTop_toBottomOf="@+id/pageTitle">
 
 
         <TextView
@@ -47,7 +61,28 @@
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down_white"
+                tools:text="United States Dollar" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down_white"
+                tools:text="United States Dollar" />
+        </TextSwitcher>
 
 
         <TextView
@@ -78,7 +113,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBaseline_toBaselineOf="@id/fromCurrencyAmountTv"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentWhite"
+                android:textSize="24sp"
+                tools:text="$" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentWhite"
+                android:textSize="24sp"
+                tools:text="$" />
+        </TextSwitcher>
 
         <TextSwitcher
             android:id="@+id/fromCurrencyCodeTv"
@@ -86,7 +140,26 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:layout_constraintBaseline_toBaselineOf="@id/fromCurrencyTitleTv"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentWhite"
+                android:textSize="20sp"
+                tools:text="USD" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentWhite"
+                android:textSize="20sp"
+                tools:text="USD" />
+        </TextSwitcher>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,14 +169,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.37" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70" />
+        app:layout_constraintGuide_percent="0.74" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,7 +192,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guidelineTop"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="64dp">
 
 
         <TextView
@@ -143,7 +217,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintBaseline_toBaselineOf="@id/toCurrencyTitleTv"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentPurple"
+                android:textSize="20sp"
+                tools:text="INR" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentPurple"
+                android:textSize="20sp"
+                tools:text="INR" />
+        </TextSwitcher>
 
 
         <TextView
@@ -174,7 +266,25 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             app:layout_constraintBaseline_toBaselineOf="@id/toCurrencyAmountTv"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentPurple"
+                android:textSize="24sp"
+                tools:text="₹" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/transparentPurple"
+                android:textSize="24sp"
+                tools:text="₹" />
+        </TextSwitcher>
 
         <TextSwitcher
             android:id="@+id/toCurrencyTitleTv"
@@ -183,7 +293,30 @@
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple_500"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down_white"
+                app:drawableTint="@color/purple_500"
+                tools:text="Indian Rupees" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple_500"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down_white"
+                app:drawableTint="@color/purple_500"
+                tools:text="Indian Rupees" />
+        </TextSwitcher>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -222,10 +355,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guidelineBottom">
+        app:layout_constraintTop_toBottomOf="@+id/toCurrencyWrap">
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChartView"
@@ -240,12 +374,12 @@
             android:id="@+id/chartProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

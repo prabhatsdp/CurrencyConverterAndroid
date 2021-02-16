@@ -2,7 +2,7 @@ package `in`.crazybytes.currencyconverter.features.currency
 
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.databinding.ItemSelectCurrencyBinding
-import `in`.crazybytes.currencyconverter.other.Helper.currencyList
+import `in`.crazybytes.currencyconverter.utils.Helper.currencyList
 import `in`.crazybytes.currencyconverter.utils.CurrencySelectionListener
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,7 +1,7 @@
 package `in`.crazybytes.currencyconverter.ui.views
 
 import `in`.crazybytes.currencyconverter.R
-import `in`.crazybytes.currencyconverter.other.Helper
+import `in`.crazybytes.currencyconverter.utils.Helper
 import android.content.Context
 import android.widget.TextView
 import com.github.mikephil.charting.components.MarkerView

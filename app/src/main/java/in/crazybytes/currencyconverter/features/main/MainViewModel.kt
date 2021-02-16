@@ -3,8 +3,9 @@ package `in`.crazybytes.currencyconverter.features.main
 import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.data.models.RateHistory
 import `in`.crazybytes.currencyconverter.data.repositories.MainRepository
-import `in`.crazybytes.currencyconverter.other.Event
-import `in`.crazybytes.currencyconverter.other.Helper
+import `in`.crazybytes.currencyconverter.utils.Constants.NUM_DAYS_QUERY
+import `in`.crazybytes.currencyconverter.utils.Event
+import `in`.crazybytes.currencyconverter.utils.Helper
 import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import `in`.crazybytes.currencyconverter.utils.Resource
 import android.util.Log
@@ -16,6 +17,7 @@ import com.github.mikephil.charting.data.Entry
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.util.*
 import javax.inject.Inject
 
@@ -122,8 +124,14 @@ class MainViewModel @Inject constructor(
 
         try {
 
-            val startAt = "2021-02-08"
-            val endAt = "2021-02-14"
+            val calendar = Calendar.getInstance()
+            val today = calendar.time
+
+            calendar.add(Calendar.DAY_OF_YEAR, -NUM_DAYS_QUERY)
+            val dayToQueryFrom = calendar.time
+
+            val startAt = Helper.getQueryDateStrFromDate(dayToQueryFrom)
+            val endAt = Helper.getQueryDateStrFromDate(today)
             val base = fromCurrency.value!!.peekContent().code
             val symbols = toCurrency.value!!.peekContent().code
 
@@ -146,7 +154,7 @@ class MainViewModel @Inject constructor(
                         val entryList = arrayListOf<Entry>()
                         val labelList = arrayListOf<String>()
                         val historyJson = response.data!!.ratesHistory
-                        val sortedHistoryMap = TreeMap<Date, JsonObject>(historyJson)
+                        val sortedHistoryMap = TreeMap(historyJson)
 
 
                         var entryCounter = 0f;
