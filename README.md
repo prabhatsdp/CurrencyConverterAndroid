@@ -1,4 +1,4 @@
-# **Currency Converter Android App by Prabhat Pandey**
+# **Currency Converter Android App by Prabhat Pandey :man_technogist:**
 
 A simple and modern currency converter app for Android platform. The app is developed using Kotlin, MVVM, Dagger Hilt, Retrofit. Feel free :smile: to provide feedback or suggestions :loudspeaker: if any.
 
