@@ -4,9 +4,9 @@ import `in`.crazybytes.currencyconverter.data.models.Currency
 import `in`.crazybytes.currencyconverter.data.models.RateHistory
 import `in`.crazybytes.currencyconverter.data.repositories.MainRepository
 import `in`.crazybytes.currencyconverter.utils.Constants.NUM_DAYS_QUERY
+import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import `in`.crazybytes.currencyconverter.utils.Event
 import `in`.crazybytes.currencyconverter.utils.Helper
-import `in`.crazybytes.currencyconverter.utils.DispatcherProvider
 import `in`.crazybytes.currencyconverter.utils.Resource
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -14,10 +14,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
-import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.time.Instant
 import java.util.*
 import javax.inject.Inject
 
@@ -98,9 +96,11 @@ class MainViewModel @Inject constructor(
                         } else {
 
                             val rateString =
-                                if (rate < 0.01) Helper.roundToFourDecimalPlacesString(rate) else Helper.roundToTwoDecimalPlacesString(
-                                    rate
-                                )
+                                if (rate < 0.01) {
+                                    Helper.roundToFourDecimalPlacesString(rate * fromAmount!!)
+                                } else {
+                                    Helper.roundToTwoDecimalPlacesString(rate * fromAmount!!)
+                                }
                             _conversion.postValue(CurrencyRateEvent.Success(rateString))
 
                         }
