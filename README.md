@@ -31,4 +31,4 @@ A simple and modern currency converter app for Android platform. The app is deve
 
 ##### Prabhat Pandey #####
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/iPrabhat_?label=Follow&style=social)](https://twitter.com/iPrabhat_)  [![Twitter Follow](https://img.shields.io/github/followers/iPrabhat404?label=Follow&style=social)](https://github.com/iPrabhat404)
+[![Twitter Follow](https://img.shields.io/twitter/follow/prabhatsdp?label=Follow&style=social)](https://twitter.com/prabhatsdp)  [![Twitter Follow](https://img.shields.io/github/followers/prabhatsdp?label=Follow&style=social)](https://github.com/prabhatsdp)
