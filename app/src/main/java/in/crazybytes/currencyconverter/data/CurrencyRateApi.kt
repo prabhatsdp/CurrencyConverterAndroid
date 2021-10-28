@@ -19,11 +19,11 @@ interface CurrencyRateApi {
     ) : Response<CurrencyRatesResponse>
 
 
-    @GET("/history")
-    suspend fun getRatesHistory(
-        @Query("start_at") startAt: String,
-        @Query("end_at") endAt: String,
-        @Query("base") base: String,
-        @Query("symbols") symbols: String,
-    ) : Response<RatesHistoryResponse>
+//    @GET("/history")
+//    suspend fun getRatesHistory(
+//        @Query("start_at") startAt: String,
+//        @Query("end_at") endAt: String,
+//        @Query("base") base: String,
+//        @Query("symbols") symbols: String,
+//    ) : Response<RatesHistoryResponse>
 }

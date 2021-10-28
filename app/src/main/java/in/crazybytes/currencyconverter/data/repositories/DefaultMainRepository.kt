@@ -31,26 +31,26 @@ class DefaultMainRepository @Inject constructor(
         }
     }
 
-    override suspend fun getRatesHistory(
-        startAt: String,
-        endAt: String,
-        base: String,
-        symbols: String
-    ): Resource<RatesHistoryResponse> {
-
-        return try {
-            val response = api.getRatesHistory(startAt, endAt, base, symbols)
-            val result = response.body()
-            if (response.isSuccessful && result != null) {
-                Resource.Success(result)
-            } else {
-                Resource.Error(response.message())
-            }
-
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An Error Occurred while fetching history.")
-        }
-
-
-    }
+//    override suspend fun getRatesHistory(
+//        startAt: String,
+//        endAt: String,
+//        base: String,
+//        symbols: String
+//    ): Resource<RatesHistoryResponse> {
+//
+//        return try {
+//            val response = api.getRatesHistory(startAt, endAt, base, symbols)
+//            val result = response.body()
+//            if (response.isSuccessful && result != null) {
+//                Resource.Success(result)
+//            } else {
+//                Resource.Error(response.message())
+//            }
+//
+//        } catch (e: Exception) {
+//            Resource.Error(e.message ?: "An Error Occurred while fetching history.")
+//        }
+//
+//
+//    }
 }
