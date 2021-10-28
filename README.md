@@ -1,10 +1,10 @@
 # **Currency Converter Android App by Prabhat Pandey :man_technologist:**
 
+A simple and modern currency converter app for Android platform. The app is developed using Kotlin, MVVM, Dagger Hilt, Retrofit. Feel free :smile: to provide feedback or suggestions :loudspeaker: if any.
+<br/>
 ## **[IMPORTANT] The app is currently not working.
 The app is currently not working due to the api limitations implemented recently by ExchangeRateApi.io. It introduced
 limit and changed the endpoints of the api. We are working on fixing the issue. Thank you.
-
-A simple and modern currency converter app for Android platform. The app is developed using Kotlin, MVVM, Dagger Hilt, Retrofit. Feel free :smile: to provide feedback or suggestions :loudspeaker: if any.
 
 ## **Screenshots** ##
 
