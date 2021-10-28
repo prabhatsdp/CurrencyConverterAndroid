@@ -35,7 +35,7 @@ object AppModule {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
 
-        val gson = GsonBuilder().setDateFormat("yyyy-MM-dd").create()
+        val gson = GsonBuilder().setDateFormat("YYYY-MM-DD").create()
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

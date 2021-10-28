@@ -114,78 +114,78 @@ class MainViewModel @Inject constructor(
         }
 
     }
-
-    /**
-     * This function fetches the exchange rate history of
-     * the currencies already stored in [fromCurrency] & [toCurrency]
-     * LiveData variables.
-     */
-    fun fetchRatesHistory() {
-
-        try {
-
-            val calendar = Calendar.getInstance()
-            val today = calendar.time
-
-            calendar.add(Calendar.DAY_OF_YEAR, -NUM_DAYS_QUERY)
-            val dayToQueryFrom = calendar.time
-
-            val startAt = Helper.getQueryDateStrFromDate(dayToQueryFrom)
-            val endAt = Helper.getQueryDateStrFromDate(today)
-            val base = fromCurrency.value!!.peekContent().code
-            val symbols = toCurrency.value!!.peekContent().code
-
-            viewModelScope.launch(dispatchers.io) {
-
-                _rateHistoryLiveData.postValue(RateHistoryEvent.Loading)
-
-                val response = repository.getRatesHistory(
-                    startAt, endAt, base, symbols
-                )
-
-                when (response) {
-
-                    is Resource.Error -> {
-                        _rateHistoryLiveData.postValue(RateHistoryEvent.Failure(response.message!!))
-                    }
-
-                    is Resource.Success -> {
-
-                        val entryList = arrayListOf<Entry>()
-                        val labelList = arrayListOf<String>()
-                        val historyJson = response.data!!.ratesHistory
-                        val sortedHistoryMap = TreeMap(historyJson)
-
-
-                        var entryCounter = 0f;
-                        for ((key, value) in sortedHistoryMap) {
-
-                            val entry = Entry(entryCounter, value[symbols].toString().toFloat())
-                            val label = Helper.formatDateToDDMMM(key)
-
-                            entryList.add(entry)
-                            labelList.add(label)
-                            entryCounter++
-                        }
-
-                        val rateHistory = RateHistory(
-                            fromCurrency.value!!.peekContent(),
-                            toCurrency.value!!.peekContent(),
-                            entryList,
-                            labelList
-                        )
-
-                        _rateHistoryLiveData.postValue(RateHistoryEvent.Success(rateHistory))
-
-                    }
-                }
-            }
-
-        } catch (e: Exception) {
-
-            _rateHistoryLiveData.postValue(RateHistoryEvent.Failure(e.message!!))
-        }
-    }
+//
+//    /**
+//     * This function fetches the exchange rate history of
+//     * the currencies already stored in [fromCurrency] & [toCurrency]
+//     * LiveData variables.
+//     */
+//    fun fetchRatesHistory() {
+//
+//        try {
+//
+//            val calendar = Calendar.getInstance()
+//            val today = calendar.time
+//
+//            calendar.add(Calendar.DAY_OF_YEAR, -NUM_DAYS_QUERY)
+//            val dayToQueryFrom = calendar.time
+//
+//            val startAt = Helper.getQueryDateStrFromDate(dayToQueryFrom)
+//            val endAt = Helper.getQueryDateStrFromDate(today)
+//            val base = fromCurrency.value!!.peekContent().code
+//            val symbols = toCurrency.value!!.peekContent().code
+//
+//            viewModelScope.launch(dispatchers.io) {
+//
+//                _rateHistoryLiveData.postValue(RateHistoryEvent.Loading)
+//
+//                val response = repository.getRatesHistory(
+//                    startAt, endAt, base, symbols
+//                )
+//
+//                when (response) {
+//
+//                    is Resource.Error -> {
+//                        _rateHistoryLiveData.postValue(RateHistoryEvent.Failure(response.message!!))
+//                    }
+//
+//                    is Resource.Success -> {
+//
+//                        val entryList = arrayListOf<Entry>()
+//                        val labelList = arrayListOf<String>()
+//                        val historyJson = response.data!!.ratesHistory
+//                        val sortedHistoryMap = TreeMap(historyJson)
+//
+//
+//                        var entryCounter = 0f;
+//                        for ((key, value) in sortedHistoryMap) {
+//
+//                            val entry = Entry(entryCounter, value[symbols].toString().toFloat())
+//                            val label = Helper.formatDateToDDMMM(key)
+//
+//                            entryList.add(entry)
+//                            labelList.add(label)
+//                            entryCounter++
+//                        }
+//
+//                        val rateHistory = RateHistory(
+//                            fromCurrency.value!!.peekContent(),
+//                            toCurrency.value!!.peekContent(),
+//                            entryList,
+//                            labelList
+//                        )
+//
+//                        _rateHistoryLiveData.postValue(RateHistoryEvent.Success(rateHistory))
+//
+//                    }
+//                }
+//            }
+//
+//        } catch (e: Exception) {
+//
+//            _rateHistoryLiveData.postValue(RateHistoryEvent.Failure(e.message!!))
+//        }
+//    }
 
     fun swapCurrencies() {
         val tempCurrency = fromCurrency.value!!.peekContent()
@@ -193,7 +193,7 @@ class MainViewModel @Inject constructor(
         _toCurrency.value = Event(tempCurrency)
 
         convert()
-        fetchRatesHistory()
+//        fetchRatesHistory()
     }
 
     /**
@@ -204,7 +204,7 @@ class MainViewModel @Inject constructor(
         _fromCurrency.value = Event(currency)
 
         convert()
-        fetchRatesHistory()
+//        fetchRatesHistory()
     }
 
     /**
@@ -215,7 +215,7 @@ class MainViewModel @Inject constructor(
         _toCurrency.value = Event(currency)
 
         convert()
-        fetchRatesHistory()
+//        fetchRatesHistory()
     }
 
     fun setAmount(amountStr: String) {

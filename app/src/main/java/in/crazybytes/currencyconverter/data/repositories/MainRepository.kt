@@ -14,11 +14,11 @@ interface MainRepository {
 
     suspend fun getRates(base: String) : Resource<CurrencyRatesResponse>
 
-    suspend fun getRatesHistory(
-        startAt: String,
-        endAt: String,
-        base: String,
-        symbols: String
-    ) : Resource<RatesHistoryResponse>
+//    suspend fun getRatesHistory(
+//        startAt: String,
+//        endAt: String,
+//        base: String,
+//        symbols: String
+//    ) : Resource<RatesHistoryResponse>
 
 }

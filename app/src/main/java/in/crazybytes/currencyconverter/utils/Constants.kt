@@ -8,7 +8,7 @@ import `in`.crazybytes.currencyconverter.data.models.Currency
  */
 
 object Constants {
-    const val BASE_URL = "https://api.exchangeratesapi.io"
+    const val BASE_URL = "http://api.exchangeratesapi.io/v1"
     const val SOURCE_FROM = "from"
     const val SOURCE_TO = "to"
     const val NUM_DAYS_QUERY = 7

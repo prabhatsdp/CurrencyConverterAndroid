@@ -41,7 +41,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
         viewModel.convert()
-        viewModel.fetchRatesHistory()
+//        viewModel.fetchRatesHistory()
     }
 
     override fun onCreateView(
@@ -64,14 +64,14 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         binding.fromCurrencyAmountTv.setOnClickListener(this)
         binding.fabBtnSwap.setOnClickListener(this)
 
-        //info: Setting TextSwitcher
+        // Setting TextSwitcher
         setAnimationToAllTextSwitchers(activity as AppCompatActivity)
 
-        //info: Setting Chart Details
+        //Setting Chart Details
 //        setupChart(activity as AppCompatActivity)
 
 
-        //info: Observing [fromCurrency] from mainViewModel
+        //Observing [fromCurrency] from mainViewModel
         viewModel.fromCurrency.observe(viewLifecycleOwner) { currencyEvent ->
 
             currencyEvent.getContentIfNotHandled().let { currency ->
@@ -91,7 +91,7 @@ class ConverterFragment : Fragment(), View.OnClickListener {
 
         }
 
-        //info: observing  [toCurrency] from mainViewModel
+        // observing  [toCurrency] from mainViewModel
         viewModel.toCurrency.observe(viewLifecycleOwner) { currencyEvent ->
 
             currencyEvent.getContentIfNotHandled().let { currency ->
@@ -152,95 +152,95 @@ class ConverterFragment : Fragment(), View.OnClickListener {
         }
 
         //info: observer for rateHistoryLiveData
-
-        viewModel.rateHistoryLiveData.observe(viewLifecycleOwner) { rateHistoryEvent ->
-
-            when (rateHistoryEvent) {
-
-                is MainViewModel.RateHistoryEvent.Loading -> {
-                    binding.chartProgressBar.isVisible = true
-                }
-
-                is MainViewModel.RateHistoryEvent.Failure -> {
-                    binding.chartProgressBar.isVisible = false
-                }
-
-                is MainViewModel.RateHistoryEvent.Success -> {
-
-                    setupChart(activity as AppCompatActivity, rateHistoryEvent.result)
-
-                    binding.chartProgressBar.isVisible = false
-                }
-
-                is MainViewModel.RateHistoryEvent.Empty -> {
-                    binding.chartProgressBar.isVisible = false
-                }
-
-            }
-        }
+//
+//        viewModel.rateHistoryLiveData.observe(viewLifecycleOwner) { rateHistoryEvent ->
+//
+//            when (rateHistoryEvent) {
+//
+//                is MainViewModel.RateHistoryEvent.Loading -> {
+//                    binding.chartProgressBar.isVisible = true
+//                }
+//
+//                is MainViewModel.RateHistoryEvent.Failure -> {
+//                    binding.chartProgressBar.isVisible = false
+//                }
+//
+//                is MainViewModel.RateHistoryEvent.Success -> {
+//
+//                    setupChart(activity as AppCompatActivity, rateHistoryEvent.result)
+//
+//                    binding.chartProgressBar.isVisible = false
+//                }
+//
+//                is MainViewModel.RateHistoryEvent.Empty -> {
+//                    binding.chartProgressBar.isVisible = false
+//                }
+//
+//            }
+//        }
 
     }
-
-    private fun setupChart(appCompatActivity: AppCompatActivity, rateHistory: RateHistory) {
-
-
-        val dataSet = LineDataSet(rateHistory.entries, "Rate")
-
-        with(dataSet) {
-            setDrawValues(false)
-            setDrawFilled(true)
-            fillDrawable = getDrawable(appCompatActivity, R.drawable.bg_fade_gradient)
-            lineWidth = 4f
-            color = getColor(appCompatActivity, R.color.purple_500)
-            mode = LineDataSet.Mode.CUBIC_BEZIER
-            setDrawCircleHole(true)
-            circleRadius = 6f
-            circleHoleRadius = 3f
-            setCircleColor(getColor(appCompatActivity, R.color.purple_500))
-            valueTextSize = 24f
-        }
-
-
-        with(binding.lineChartView) {
-
-            //info: Setting The Data for The line chart here
-            data = LineData(dataSet)
-
-            xAxis.labelRotationAngle = 0f
-            xAxis.setCenterAxisLabels(false)
-            xAxis.granularity = 1f
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.setDrawGridLines(false)
-            xAxis.textSize = 10f
-            xAxis.typeface = ResourcesCompat.getFont(appCompatActivity, R.font.niramit)
-            xAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return rateHistory.labels[value.toInt()]
-                }
-            }
-
-
-            axisLeft.setDrawGridLines(false)
-            axisLeft.isEnabled = false
-
-            axisRight.setDrawGridLines(false)
-            axisRight.isEnabled = false
-
-            description.text = ""
-            setNoDataText("No Data available!")
-            legend.isEnabled = false
-            extraBottomOffset = 10f
-
-            //animate function can also be used to animate the chart here in place of invalidate()
-
-            invalidate()
-        }
+//
+//    private fun setupChart(appCompatActivity: AppCompatActivity, rateHistory: RateHistory) {
+//
+//
+//        val dataSet = LineDataSet(rateHistory.entries, "Rate")
+//
+//        with(dataSet) {
+//            setDrawValues(false)
+//            setDrawFilled(true)
+//            fillDrawable = getDrawable(appCompatActivity, R.drawable.bg_fade_gradient)
+//            lineWidth = 4f
+//            color = getColor(appCompatActivity, R.color.purple_500)
+//            mode = LineDataSet.Mode.CUBIC_BEZIER
+//            setDrawCircleHole(true)
+//            circleRadius = 6f
+//            circleHoleRadius = 3f
+//            setCircleColor(getColor(appCompatActivity, R.color.purple_500))
+//            valueTextSize = 24f
+//        }
+//
+//
+//        with(binding.lineChartView) {
+//
+//            //info: Setting The Data for The line chart here
+//            data = LineData(dataSet)
+//
+//            xAxis.labelRotationAngle = 0f
+//            xAxis.setCenterAxisLabels(false)
+//            xAxis.granularity = 1f
+//            xAxis.position = XAxis.XAxisPosition.BOTTOM
+//            xAxis.setDrawGridLines(false)
+//            xAxis.textSize = 10f
+//            xAxis.typeface = ResourcesCompat.getFont(appCompatActivity, R.font.niramit)
+//            xAxis.valueFormatter = object : ValueFormatter() {
+//                override fun getFormattedValue(value: Float): String {
+//                    return rateHistory.labels[value.toInt()]
+//                }
+//            }
+//
+//
+//            axisLeft.setDrawGridLines(false)
+//            axisLeft.isEnabled = false
+//
+//            axisRight.setDrawGridLines(false)
+//            axisRight.isEnabled = false
+//
+//            description.text = ""
+//            setNoDataText("No Data available!")
+//            legend.isEnabled = false
+//            extraBottomOffset = 10f
+//
+//            //animate function can also be used to animate the chart here in place of invalidate()
+//
+//            invalidate()
+//        }
 
 
         //info: CustomMarkerView Code
-        val markerView = CustomChartMarkerView(appCompatActivity, rateHistory.toCurrency.symbol)
-        binding.lineChartView.marker = markerView
-    }
+//        val markerView = CustomChartMarkerView(appCompatActivity, rateHistory.toCurrency.symbol)
+//        binding.lineChartView.marker = markerView
+//    }
 
     private fun setAnimationToAllTextSwitchers(activity: AppCompatActivity) {
 
